@@ -1,0 +1,1 @@
+# This folder will contain automated test cases for different classes of the blockchain application
