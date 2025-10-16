@@ -4,13 +4,7 @@ import hashlib
 import datetime
 
 
-# time to get the current timestamp at a 12hour format
-now = datetime.datetime.now()
-hour_12_format = now.strftime("%Y-%m-%d %I:%M:%S %p")
-
-
 # Block Class
-
 class Block:
 
     # Initiliazation of the Block - Combining the all the datas to make a block
@@ -26,7 +20,6 @@ class Block:
         return hashlib.sha256(block_string.encode()).hexdigest() # Generating the SHA-256 hash of the block string
     
     # String representation of the block for easy reading    
-
     def __str__(self):
         return (f"Timestamp: {self.timestamp}\n"
                 f"Data: {self.data}\n"
@@ -35,7 +28,6 @@ class Block:
 
 
 # Blockchain Class
-
 class Blockchain:
     
     # Initiliazation of the chain by creating the genesis block
@@ -45,7 +37,8 @@ class Blockchain:
     
     # Creating the genesis block - The first block in the blockchain
     def create_genesis_block(self):
-        return Block("0", hour_12_format, "Genesis Block") # Previous hash is "0" for the genesis block
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %I:%M:%S %p") # Getting the current timestamp in 12-hour format
+        return Block("0", timestamp, "Genesis Block") # Previous hash is "0" for the genesis block
     
     # Getting the latest block in the chain
     def get_latest_block(self):
@@ -54,8 +47,8 @@ class Blockchain:
     # Adding a new block to the chain
     def add_block(self, data):
         previous_block = self.get_latest_block() # Getting the latest block which will be the previous block for the new block
-
-        new_block = Block(previous_block.hash, hour_12_format, data) # Creating a new block with the previous block's hash, current timestamp and data
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %I:%M:%S %p") # Getting the current timestamp in 12-hour format
+        new_block = Block(previous_block.hash, timestamp, data) # Creating a new block with the previous block's hash, current timestamp and data
         self.chain.append(new_block) # Adding the new block to the chain
 
     # Validating the integrity of the blockchain
